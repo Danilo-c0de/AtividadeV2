@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Hello World - Teste</title>
+    <style>
+        /* Fundo escuro com um tom profissional */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1E1E1E; /* Cor de fundo escura */
+            color: #F4F4F4; /* Texto claro para bom contraste */
+            line-height: 1.6;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: #333; /* Escuro e profissional */
+            padding: 40px;
+            color: #FF8C00; /* Laranja vibrante */
+            text-align: center;
+            font-size: 2.5em;
+            border-bottom: 3px solid #FF8C00; /* Detalhe laranja */
+            letter-spacing: 1px;
+        }
+
+        /* Container Principal */
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: #2C2C2C; /* Cinza escuro para o fundo das caixas */
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background: rgba(44, 44, 44, 0.9); /* Transparência sutil */
+        }
+
+        /* Títulos */
+        h2 {
+            color: #FF8C00; /* Laranja vibrante para os títulos */
+            font-size: 1.9em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #D3D3D3; /* Cor mais clara para texto de descrição */
+        }
+
+        /* Labels */
+        label {
+            font-weight: 600;
+            margin-top: 20px;
+            display: block;
+            font-size: 1.1em;
+            color: #F4F4F4; /* Cor de texto clara para o label */
+        }
+
+        /* Inputs */
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 15px;
+            margin-top: 8px;
+            border-radius: 8px;
+            border: 2px solid #555;
+            font-size: 1.1em;
+            box-sizing: border-box;
+            background-color: #444; /* Fundo mais escuro para inputs */
+            color: #F4F4F4; /* Texto claro */
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus {
+            border-color: #FF8C00; /* Laranja vibrante no foco */
+            background-color: #555; /* Fundo mais claro quando em foco */
+            outline: none;
+        }
+
+        /* Botões */
+        button {
+            background-color: #FF8C00; /* Cor laranja vibrante */
+            color: white;
+            padding: 18px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #FF6F00; /* Cor laranja mais escura no hover */
+            transform: scale(1.05); /* Efeito de aumento no hover */
+        }
+
+        button:active {
+            background-color: #E65C00; /* Cor mais intensa no clique */
+        }
+
+        /* Caixa de Resposta */
+        .response-box {
+            background-color: #333;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            box-sizing: border-box;
+            font-size: 1.2em;
+            color: #F4F4F4;
+            min-height: 60px;
+        }
+
+        /* Efeitos de Sombra nos Botões */
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 140, 0, 0.6);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 25px;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            button {
+                padding: 15px;
+            }
+
+            input[type="text"], input[type="email"] {
+                width: 100%;
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        API Hello World - Teste
+    </header>
+
+    <!-- Container Principal -->
+    <div class="container">
+        <!-- Testar GET -->
+        <h2>Testar GET /Hello_World</h2>
+        <p>Receba uma saudação personalizada a partir da API.</p>
+        <button onclick="getHelloWorld()">Chamar GET</button>
+        <div class="response-box" id="responseGet">
+            <p>Resposta aparecerá aqui...</p>
+        </div>
+    </div>
+
+    <!-- Container do POST -->
+    <div class="container">
+        <h2>Testar POST /Hello_World/{id}</h2>
+        <p>Adicione um ID, nome e e-mail para testar o POST.</p>
+
+        <label for="postUserId">Digite o ID para o POST:</label>
+        <input type="text" id="postUserId" value="123" placeholder="Exemplo: 123">
+
+        <label for="postUserName">Digite o Nome do Usuário:</label>
+        <input type="text" id="postUserName" value="Danilo" placeholder="Exemplo: Danilo">
+
+        <label for="postUserEmail">Digite o E-mail do Usuário:</label>
+        <input type="email" id="postUserEmail" value="danilo@example.com" placeholder="Exemplo: danilo@example.com">
+
+        <button onclick="postHelloWorld()">Chamar POST</button>
+
+        <div class="response-box" id="responsePost">
+            <p>Resposta aparecerá aqui...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const API_BASE_URL = 'http://localhost:8080/Hello_World'; // Ajuste a URL se necessário
+
+        async function getHelloWorld() {
+            try {
+                const response = await fetch(API_BASE_URL);
+                const data = await response.text();
+                document.getElementById('responseGet').textContent = data;
+            } catch (error) {
+                document.getElementById('responseGet').textContent = 'Erro ao chamar a API: ' + error.message;
+            }
+        }
+
+        async function postHelloWorld() {
+            const userId = document.getElementById('postUserId').value;
+            const userName = document.getElementById('postUserName').value;
+            const userEmail = document.getElementById('postUserEmail').value;
+
+            const userBody = {
+                nome: userName,
+                email: userEmail
+            };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/${userId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userBody)
+                });
+                const data = await response.text();
+                document.getElementById('responsePost').textContent = data;
+            } catch (error) {
+                document.getElementById('responsePost').textContent = 'Erro ao chamar a API: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
